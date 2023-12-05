@@ -6,7 +6,7 @@ import AskButton from './AskButton';
 const App = () => {
   return (
     <div>
-      <h1>The Ultimate Question</h1>
+      <b>The Ultimate Question</b>
       <AskButton />
     </div>
   );
