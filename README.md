@@ -1,3 +1,4 @@
+
 # Hello React App with AskButton.js
 
 This repository contains a simple React application with an `AskButton.js` component. When the user clicks the "Ask" button, the app makes an HTTP request to an AWS Lambda URL, processes the response, and updates the UI with the received data.
@@ -9,17 +10,23 @@ The user interacts with the GitHub Pages-hosted React app and clicks the "Ask" b
 ```mermaid
 sequenceDiagram
   participant User
+  participant Browser
   participant GitHubPages
   participant AWSLambda
-
-  User->>GitHubPages: Clicks "Ask" button
-  GitHubPages->>AWSLambda: HTTP Request
-
+ 
+  User->>Browser: Clicks "Ask" button
+  Browser-->>GitHubPages: HTTP Request (GitHub Pages content, including JavaScript bundle)
+  activate Browser
+  activate GitHubPages
+  GitHubPages-->>Browser: Sends JavaScript bundle
+  deactivate GitHubPages
+  Browser->>AWSLambda: HTTP Request (JavaScript executes in the browser)
   activate AWSLambda
-  AWSLambda-->>GitHubPages: JSON Response
+  AWSLambda-->>Browser: JSON Response
   deactivate AWSLambda
-
-  GitHubPages-->>User: Updates UI with Response
+  Browser-->>Browser: Updates UI with Response (local rendering)
+  deactivate Browser
+  Browser-->>User: UI Update Presented
 ```
 
 ### Testing the App
@@ -32,16 +39,14 @@ curl -s https://vyvvqaw46b643cmqiohh4abq3q0sglbb.lambda-url.us-west-2.on.aws
 and expect to see JSON output as follows:
 
 >{
-"answer": "42 is the Answer to the Ultimate Question of Life, the Universe, and Everything"
+  "answer": "42 is the Answer to the Ultimate Question of Life, the Universe, and Everything"
 }
+
 
 2) Test the App in the action
 
->open [https://considerable.github.io/hello-react-gh-pages/](https://considerable.github.io/hello-react-gh-pages/)
-
-Make sure your browser supports JavaScript, and if you encounter any issues, check the browser console for error messages. 
+Open [https://considerable.github.io/hello-react-gh-pages/](https://considerable.github.io/hello-react-gh-pages/) in a JavaScript-compatible browser. Make sure your browser supports JavaScript, and if you encounter any issues, check the browser console for error messages.
 
 3) Inspect the source code of [AskButton.js](https://github.com/considerable/hello-react-gh-pages/blob/main/src/AskButton.js)
 
 Feel free to explore the app and provide feedback based on your testing experience.
-
