@@ -13,8 +13,8 @@ const handleAskClick = async () => {
     if (result.ok) {
       const jsonResult = await result.json();
 
-      // Assuming the JSON output has an 'Answer' property
-      const answer = jsonResult.Answer;
+      // Assuming the JSON output has an 'answer' property
+      const answer = jsonResult.answer;
 
       // Check if 'answer' is a string, if not, convert it to a string
       const responseText = typeof answer === 'string' ? answer : JSON.stringify(answer);
@@ -34,7 +34,7 @@ const handleAskClick = async () => {
       <div>&nbsp;</div>
       {/* Adjusted spacing for better readability */}
       <div style={{ marginBottom: '10px' }}>
-        <button onClick={handleAskClick}>Ask</button>
+        <button onClick={handleAskClick}><b>Ask</b></button>
       </div>
       <p>{response}</p>
     </div>
