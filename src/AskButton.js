@@ -30,11 +30,12 @@ const handleAskClick = async () => {
 
 return (
   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '100vh' }}>
-    <div>&nbsp;</div>
+    <div><strong>The Ultimate Question?</strong></div>
+    <p>&nbsp;</p>
     <div style={{ marginBottom: '10px' }}>
-      <button onClick={handleAskClick}><strong>Ask</strong></button>
+      <button onClick={handleAskClick}><strong>Click to ask</strong></button>
     </div>
-    <p>{response}</p>
+    <p>Answer: {response}</p>
   </div>
 );
 
