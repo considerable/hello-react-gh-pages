@@ -28,9 +28,10 @@ const AskButton = () => {
   return (
     <div>
       <div>&nbsp;</div>
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <button onClick={handleAskClick}>Ask</button>
+      {/* Adjusted spacing for better readability */}
+      <div style={{ marginBottom: '10px' }}>
+        <button onClick={handleAskClick}>Ask</button>
+      </div>
       <p>{response}</p>
     </div>
   );
