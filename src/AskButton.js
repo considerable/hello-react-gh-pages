@@ -28,17 +28,16 @@ const handleAskClick = async () => {
   }
 };
 
-
-  return (
-    <div>
-      <div>&nbsp;</div>
-      {/* Adjusted spacing for better readability */}
-      <div style={{ marginBottom: '10px' }}>
-        <button onClick={handleAskClick}><b>Ask</b></button>
-      </div>
-      <p>{response}</p>
+return (
+  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '100vh' }}>
+    <div>&nbsp;</div>
+    <div style={{ marginBottom: '10px' }}>
+      <button onClick={handleAskClick}><strong>Ask</strong></button>
     </div>
-  );
+    <p>{response}</p>
+  </div>
+);
+
 };
 
 export default AskButton;
