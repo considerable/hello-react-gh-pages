@@ -15,18 +15,22 @@ sequenceDiagram
   participant AWSLambda
  
   User->>Browser: Clicks "Ask" button
-  Browser-->>GitHubPages: HTTP Request (GitHub Pages content, including JavaScript bundle)
   activate Browser
+  Browser-->>GitHubPages: HTTP Request (GitHub Pages content, including JavaScript bundle)
+  deactivate Browser
   activate GitHubPages
   GitHubPages-->>Browser: Sends JavaScript bundle
   deactivate GitHubPages
+  activate Browser
   Browser->>AWSLambda: HTTP Request (JavaScript executes in the browser)
+  deactivate Browser
   activate AWSLambda
   AWSLambda-->>Browser: JSON Response
   deactivate AWSLambda
+  activate Browser
   Browser-->>Browser: Updates UI with Response (local rendering)
-  deactivate Browser
   Browser-->>User: UI Update Presented
+  deactivate Browser
 ```
 
 ### Testing the App
