@@ -7,17 +7,17 @@ const AskButton = () => {
 
   const handleAskClick = async () => {
     try {
-      const url = 'https://vyvvqaw46b643cmqiohh4abq3q0sglbb.lambda-url.us-west-2.on.aws';
+      const url = 'https://xdvlnujd6at2mfiwtqt6vt6xhe0hqwwx.lambda-url.us-west-2.on.aws';
       const result = await fetch(url);
 
       if (result.ok) {
         const jsonResult = await result.json();
 
-        // Assuming the JSON output has an 'answer' property
-        const answer = jsonResult.answer;
+        // Assuming the JSON output has an 'message' property
+        const message = jsonResult.message;
 
-        // Check if 'answer' is a string, if not, convert it to a string
-        const responseText = typeof answer === 'string' ? answer : JSON.stringify(answer);
+        // Check if 'message' is a string, if not, convert it to a string
+        const responseText = typeof message === 'string' ? message : JSON.stringify(message);
 
         setResponse('Answer: ' + responseText);
       } else {

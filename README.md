@@ -38,13 +38,11 @@ sequenceDiagram
 1) Test the backend with curl CLI
 
 ```bash
-curl -s https://vyvvqaw46b643cmqiohh4abq3q0sglbb.lambda-url.us-west-2.on.aws
+curl -s https://xdvlnujd6at2mfiwtqt6vt6xhe0hqwwx.lambda-url.us-west-2.on.aws
 ```
 and expect to see JSON output as follows:
 
->{
-  "answer": "42 is the Answer to the Ultimate Question of Life, the Universe, and Everything"
-}
+>{"message": "42 is the Answer to the Ultimate Question of Life, the Universe, and Everything"}
 
 
 2) Test the App in the action
