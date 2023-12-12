@@ -51,4 +51,6 @@ Open [https://considerable.github.io/hello-react-gh-pages/](https://considerable
 
 3) Inspect the source code of [AskButton.js](https://github.com/considerable/hello-react-gh-pages/blob/main/src/AskButton.js)
 
+4) Inspect the source code of [lambda_function.py](https://github.com/considerable/hello-react-gh-pages/blob/main/aws/lambda_function.py)
+
 Feel free to explore the app and provide feedback based on your testing experience.
