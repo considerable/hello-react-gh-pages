@@ -16,7 +16,7 @@ sequenceDiagram
  
   User->>Browser: Clicks "Ask" button
   activate Browser
-  Browser-->>GitHubPages: HTTP Request (GitHub Pages content, including JavaScript bundle)
+  Browser->>GitHubPages: HTTP Request (GitHub Pages content, including JavaScript bundle)
   deactivate Browser
   activate GitHubPages
   GitHubPages-->>Browser: Sends JavaScript bundle
@@ -38,7 +38,7 @@ sequenceDiagram
 1) Test the backend with curl CLI
 
 ```bash
-curl -s https://xdvlnujd6at2mfiwtqt6vt6xhe0hqwwx.lambda-url.us-west-2.on.aws
+curl -s https://dmqqfwxqwjya6jkwx3u5j2yw240wxuzo.lambda-url.us-west-2.on.aws
 ```
 and expect to see JSON output as follows:
 

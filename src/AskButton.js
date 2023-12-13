@@ -7,7 +7,7 @@ const AskButton = () => {
 
   const handleAskClick = async () => {
     try {
-      const url = 'https://xdvlnujd6at2mfiwtqt6vt6xhe0hqwwx.lambda-url.us-west-2.on.aws';
+      const url = 'https://dmqqfwxqwjya6jkwx3u5j2yw240wxuzo.lambda-url.us-west-2.on.aws';
       const result = await fetch(url);
 
       if (result.ok) {
