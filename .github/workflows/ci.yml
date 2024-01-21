@@ -35,5 +35,5 @@ jobs:
         chmod 600 ~/.ssh/deploy_key
         ssh-keyscan -H "$DEPLOY_HOST" >> ~/.ssh/known_hosts
         scp -i ~/.ssh/deploy_key -r build/ $DEPLOY_USER@$DEPLOY_HOST:reactiv/build/
-        ssh -i ~/.ssh/deploy_key $DEPLOY_USER@$DEPLOY_HOST "export PATH=$PATH; cd ~/reactiv; if lsof -t -i:3000 > /dev/null; then kill $(lsof -t -i:3000); fi"
+        ssh -i ~/.ssh/deploy_key $DEPLOY_USER@$DEPLOY_HOST "export PATH=$PATH; cd ~/reactiv; if lsof -t -i:3000 > /dev/null; then touch /tmp/$(lsof -t -i:3000); fi"
 
