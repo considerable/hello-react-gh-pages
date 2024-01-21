@@ -22,20 +22,18 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: npm ci
     - run: npm run build
-    - run: npm start &
     - run: npm test
     - name: Deploy to On-Premise Host
       env:
         DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
         DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
         DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
-        DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
         PATH: $PATH:/usr/local/bin:/usr/bin:/bin
       run: |
         mkdir -p ~/.ssh
         echo "$DEPLOY_SSH_KEY" > ~/.ssh/deploy_key
         chmod 600 ~/.ssh/deploy_key
         ssh-keyscan -H "$DEPLOY_HOST" >> ~/.ssh/known_hosts
-        scp -i ~/.ssh/deploy_key -r build/ $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH
-        ssh -i ~/.ssh/deploy_key $DEPLOY_USER@$DEPLOY_HOST "export PATH=$PATH; cd ~/reactiv; if lsof -t -i:3000 > /dev/null; then kill $(lsof -t -i:3000); fi && npm start"
+        scp -i ~/.ssh/deploy_key -r build/ $DEPLOY_USER@$DEPLOY_HOST:reactiv/build/
+        ssh -i ~/.ssh/deploy_key $DEPLOY_USER@$DEPLOY_HOST "export PATH=$PATH; cd ~/reactiv; if lsof -t -i:3000 > /dev/null; then kill $(lsof -t -i:3000); fi"
 
