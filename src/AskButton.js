@@ -1,9 +1,17 @@
 // AJAX in AskButton.js
 
 import React, { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 
 const AskButton = () => {
   const [response, setResponse] = useState('');
+
+  const navigate = useNavigate();
+
+  const goToRoot = () => {
+    // Go to the root page and replace the current page in history
+    navigate("/", { replace: true });
+  };
 
   const handleAskClick = async () => {
     try {
@@ -33,7 +41,7 @@ const AskButton = () => {
       <div><strong>The Ultimate Question?</strong></div>
       <p>&nbsp;</p>
       <div style={{ marginBottom: '10px' }}>
-        <button onClick={handleAskClick}><strong>Click to ask</strong></button>
+        <button onClick={goToRoot}><strong>Try again</strong></button>
       </div>
       <p>{response}</p>
     </div>
@@ -42,4 +50,3 @@ const AskButton = () => {
 };
 
 export default AskButton;
-
