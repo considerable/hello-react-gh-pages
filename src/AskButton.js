@@ -29,7 +29,7 @@ const AskButton = () => {
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '100vh' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
       <div><strong>The Ultimate Question?</strong></div>
       <p>&nbsp;</p>
       <div style={{ marginBottom: '10px' }}>
