@@ -1,7 +1,16 @@
+# Hello React App with GitHub Pages and AWS Lambda
 
-# Hello React App with AskButton.js
+This repository demonstrates a working proof-of-concept (POC) for static web hosting using GitHub Pages, integrated with a serverless backend powered by Amazon AWS Lambda.
 
-This repository contains a simple React application with an `AskButton.js` component. When the user clicks the "Ask" button, the app makes an HTTP request to an AWS Lambda URL, processes the response, and updates the UI with the received data.
+### Features
+
+- **Static Web Hosting**: The React application is hosted on GitHub Pages, providing a seamless and cost-effective way to serve static content.
+- **Serverless Backend**: Utilizes AWS Lambda to handle backend logic, ensuring scalability and reducing server management overhead.
+- **Interactive UI**: The `AskButton.js` component allows users to interact with the app, triggering backend processes and updating the UI in real-time.
+
+### Overview
+
+This project showcases a simple React application that includes an `AskButton.js` component. When users click the "Ask" button, the application sends an HTTP request to an AWS Lambda function, processes the response, and dynamically updates the user interface with the received data.
 
 ### How It Works
 
@@ -53,4 +62,14 @@ Open [https://considerable.github.io/hello-react-gh-pages/](https://considerable
 
 4) Inspect the source code of [lambda_function.py](https://github.com/considerable/hello-react-gh-pages/blob/main/aws/lambda_function.py)
 
+### AWS Lambda Integration
+
+The AWS Lambda function is set up to handle HTTP requests from the React application. Ensure you have the correct endpoint URL configured in your application to interact with the Lambda function.
+
+### Contributing
+
 Feel free to explore the app and provide feedback based on your testing experience.
+
+### License
+
+This project is licensed under the MIT License. 
