@@ -1,75 +1,90 @@
-# Hello React App with GitHub Pages and AWS Lambda
+# hello-react-gh-pages
 
-This repository demonstrates a working proof-of-concept (POC) for static web hosting using GitHub Pages, integrated with a serverless backend powered by Amazon AWS Lambda.
+React SPA deployed to **GitHub Pages** as a zero-cost static CDN, with a serverless AWS Lambda backend provisioned via Terraform.
 
-### Features
+Live: https://considerable.github.io/hello-react-gh-pages/
 
-- **Static Web Hosting**: The React application is hosted on GitHub Pages, providing a seamless and cost-effective way to serve static content.
-- **Serverless Backend**: Utilizes AWS Lambda to handle backend logic, ensuring scalability and reducing server management overhead.
-- **Interactive UI**: The `AskButton.js` component allows users to interact with the app, triggering backend processes and updating the UI in real-time.
+---
 
-### Overview
+## What This Is
 
-This project showcases a simple React application that includes an `AskButton.js` component. When users click the "Ask" button, the application sends an HTTP request to an AWS Lambda function, processes the response, and dynamically updates the user interface with the received data.
+A production pattern for serving a React frontend from GitHub Pages while calling a serverless AWS Lambda API — no S3, no CloudFront, no hosting bill.
 
-### How It Works
+This is the open-source reference implementation of the GitHub Pages CDN pattern I used at **Thrive Audio LLC** to deliver static assets and documentation without external hosting infrastructure.
 
-The user interacts with the GitHub Pages-hosted React app and clicks the "Ask" button.
+**Stack:**
+- React (Create React App) — frontend
+- GitHub Actions — CI/CD: build, test, deploy to GitHub Pages on every push to `main`
+- GitHub Pages — static asset hosting / CDN
+- AWS Lambda (Python) — serverless API backend
+- Terraform — Lambda + IAM provisioned as code
 
-```mermaid
-sequenceDiagram
-  participant User
-  participant Browser
-  participant GitHubPages
-  participant AWSLambda
- 
-  User->>Browser: Clicks "Ask" button
-  activate Browser
-  Browser->>GitHubPages: HTTP Request (GitHub Pages content, including JavaScript bundle)
-  deactivate Browser
-  activate GitHubPages
-  GitHubPages-->>Browser: Sends JavaScript bundle
-  deactivate GitHubPages
-  activate Browser
-  Browser->>AWSLambda: HTTP Request (JavaScript executes in the browser)
-  deactivate Browser
-  activate AWSLambda
-  AWSLambda-->>Browser: JSON Response
-  deactivate AWSLambda
-  activate Browser
-  Browser-->>Browser: Updates UI with Response (local rendering)
-  Browser-->>User: UI Update Presented
-  deactivate Browser
+---
+
+## How It Works
+
+```
+Push to main
+     │
+     ▼
+GitHub Actions (deploy.yml)
+     │  npm ci → npm run build → upload artifact
+     ▼
+GitHub Pages
+     │  serves build/ as static CDN
+     ▼
+Browser → React SPA → calls Lambda Function URL
+                              │
+                              ▼
+                        AWS Lambda (Python)
+                        provisioned by Terraform
 ```
 
-### Testing the App
+---
 
-1) Test the backend with curl CLI
+## GitHub Actions Deploy Workflow
+
+`.github/workflows/deploy.yml` — triggers on every push to `main`:
+
+1. Checkout + Node 20 setup with npm cache
+2. `npm ci` — clean install
+3. `npm run build` — production React build with `PUBLIC_URL` set for GitHub Pages subpath
+4. Upload build artifact via `actions/upload-pages-artifact`
+5. Deploy to GitHub Pages via `actions/deploy-pages` with OIDC-based permissions (no tokens stored)
+
+---
+
+## AWS Backend
+
+`aws/main.tf` — Terraform provisions:
+- IAM role with least-privilege Lambda execution policy
+- Lambda function (Python 3.11, 10s timeout)
+- Lambda Function URL with CORS headers (no API Gateway needed)
+
+`aws/lambda_function.py` — Python handler returns JSON response with CORS headers.
+
+Deploy the backend:
+```bash
+cd aws
+terraform init
+terraform apply
+```
+
+---
+
+## GitHub Pages as CDN — Why It Works
+
+GitHub Pages serves from a global CDN (Fastly). For static frontends, documentation, and asset delivery it is functionally equivalent to S3 + CloudFront at zero cost. The tradeoff: public repos only, 1GB size limit, 100GB/month bandwidth.
+
+For Thrive Audio, this pattern eliminated the need for a separate hosting infrastructure for static content while keeping deployment fully automated through GitHub Actions.
+
+---
+
+## Local Development
 
 ```bash
-curl -s https://dmqqfwxqwjya6jkwx3u5j2yw240wxuzo.lambda-url.us-west-2.on.aws
+npm install
+npm start        # http://localhost:3000
+npm test
+npm run build
 ```
-and expect to see JSON output as follows:
-
->{"message": "42 is the Answer to the Ultimate Question of Life, the Universe, and Everything"}
-
-
-2) Test the App in the action
-
-Open [https://considerable.github.io/hello-react-gh-pages/](https://considerable.github.io/hello-react-gh-pages/) in a JavaScript-compatible browser. Make sure your browser supports JavaScript, and if you encounter any issues, check the browser console for error messages.
-
-3) Inspect the source code of [AskButton.js](https://github.com/considerable/hello-react-gh-pages/blob/main/src/AskButton.js)
-
-4) Inspect the source code of [lambda_function.py](https://github.com/considerable/hello-react-gh-pages/blob/main/aws/lambda_function.py)
-
-### AWS Lambda Integration
-
-The AWS Lambda function is set up to handle HTTP requests from the React application. Ensure you have the correct endpoint URL configured in your application to interact with the Lambda function.
-
-### Contributing
-
-Feel free to explore the app and provide feedback based on your testing experience.
-
-### License
-
-This project is licensed under the MIT License. 
