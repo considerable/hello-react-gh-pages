@@ -63,12 +63,7 @@ Browser → React SPA → calls Lambda Function URL
 
 `aws/lambda_function.py` — Python handler returns JSON response with CORS headers.
 
-Deploy the backend:
-```bash
-cd aws
-terraform init
-terraform apply
-```
+> **Note:** The backend is already deployed and live at `https://dmqqfwxqwjya6jkwx3u5j2yw240wxuzo.lambda-url.us-west-2.on.aws/`. Running `terraform apply` will attempt to create duplicate resources. Import existing state first with `terraform import` if you want to manage it via Terraform.
 
 ---
 
