@@ -21,7 +21,6 @@ const AskButton = () => {
       const url = 'https://dmqqfwxqwjya6jkwx3u5j2yw240wxuzo.lambda-url.us-west-2.on.aws';
       const result = await fetch(url, {
         method: 'GET',
-        headers: { 'Content-Type': 'application/json' },
         mode: 'cors'
       });
 
