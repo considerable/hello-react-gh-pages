@@ -19,7 +19,11 @@ const AskButton = () => {
   const handleAskClick = async () => {
     try {
       const url = 'https://dmqqfwxqwjya6jkwx3u5j2yw240wxuzo.lambda-url.us-west-2.on.aws';
-      const result = await fetch(url);
+      const result = await fetch(url, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+        mode: 'cors'
+      });
 
       if (result.ok) {
         const jsonResult = await result.json();
